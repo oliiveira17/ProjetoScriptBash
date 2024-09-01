@@ -1,5 +1,5 @@
 ## Desafio ScriptBash 
-Sistemas Computacionais - UniSenai-SC
+Sistemas Computacionais - UniSenai-SC 
 
 Aluno: Mauricio Oliveira Neres - 1794941
 
