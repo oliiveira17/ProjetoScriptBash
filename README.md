@@ -104,4 +104,67 @@ sudo chown :$nome_projeto "$nome_projeto"
 sudo chmod 770 "$nome_projeto" #define as permissões para o adm e o grupo ter acesso, ler e escrever no diretorio
 
 ```
-Todos os testes com o código foram realizados 
+Todos os testes com o código foram realizados a pasta /shared se encontra no diretório da empresa.
+
+<img src="/2.png">
+
+O comando para criar um projeto é esse:
+
+<img src="/3.png">
+
+E como resultado do comando o diretório por não existir é criado, e usuários existentes são adicionado aos grupos:
+
+<img src="/4.png">
+
+O Leo é um usuário do grupo do Projeto10, e então pode entrar na pasta do projeto, tanto quando pode alterar arquivos e adicionar novos dentro do
+diretório.
+
+<img src="/6.png">
+
+E como Leo não faz parte do Projeto9 não consegue acessar o diretório:
+
+<img src="/8.png">
+
+Vemos com o comando ```getent group Projeto9``` que Leo não faz parte do grupo:
+
+<img src="/7.png">
+
+E foi possível otimizar o script para que processos e grupos não sejam criados de forma repetida:
+
+<img src="/9.png">
+
+Com isso o processo da empresa ao montar novos diretórios para novos da empresa se tornou mais rápido e fácil, com menos tendência a erros.
+
+## Código da Parte 2
+
+A segunda parte foi pensada para que tivesse um relatório diário dos arquivos que foram modificados e/ou criados dentro do diretório /shared. Contendo no relatório que foi criado no caminho /var/reports, o caminho do arquivo que foi alterado. O nome do arquivo contém o dia em que foi gerado o relatório e captura as modificações que ocorreram em até 24 horas antes.
+
+Segue o código da Parte 2:
+
+```bash
+#!/bin/bash
+
+# Diretório onde o relatório será salvo
+reportes_diarios="/var/reports"
+mkdir -p "$reportes_diarios"
+
+# Data atual para o nome do arquivo
+DATA=$(date +"%Y-%m-%d")
+ARQUIVO_RELATORIO="report_$DATA.txt"
+
+# Gera o relatório, busca somente por arquivos(files , -f) e em até 24hs, so aparecerá arquivos criados ou modificados!
+sudo find /shared -type f -mtime -1 -print0 | while IFS= read -r -d '' ARQUIVO; do
+  SUBDIR=$(basename "$(sudo dirname "$ARQUIVO")")
+  echo " $ARQUIVO - $SUBDIR" >> "$reportes_diarios/$ARQUIVO_RELATORIO"
+done
+
+```
+Ao executar o comando:
+
+```bash
+./daily_report.sh
+```
+O seguinte relatório é gerado com a data em que foi gerado o relatório e com os arquivos que foram alterados:
+
+
+
