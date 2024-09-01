@@ -166,5 +166,11 @@ Ao executar o comando:
 ```
 O seguinte relatório é gerado com a data em que foi gerado o relatório e com os arquivos que foram alterados:
 
+<img src="/10.png">
+
+Com isso percebe-se o qual importante é a geração automatizada de um relatório com arquivos que foram modificados nas últimas 24horas, torna a empresa dinâmica e mais segura, pois sabe onde e quando ocorreram as mudanças.
+
+## Conclusão 
+Foi possível criar dois scripts: manage_permissions.sh e daily_report.sh em BASH de forma robusta e com simples funcionalidade no dia a dia da empresa, onde ambos: geram relatórios dos arquivos modificados e criam grupos/diretórios de forma automatizada, onde não é criado grupos e diretórios já existentes. 
 
 
